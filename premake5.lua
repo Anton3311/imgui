@@ -1,16 +1,17 @@
 project "ImGUI"
-	kind "StaticLib"
-	language "C++"
-  cppdialect "C++17"
+    kind "StaticLib"
+    language "C++"
+    cppdialect "C++17"
 
-	targetdir ("bin/" .. OUTPUT_DIRECTORY .. "/%{prj.name}")
-	objdir ("bin-int/" .. OUTPUT_DIRECTORY .. "/%{prj.name}")
+    targetdir ("bin/" .. OUTPUT_DIRECTORY .. "/%{prj.name}")
+    objdir ("bin-int/" .. OUTPUT_DIRECTORY .. "/%{prj.name}")
 
-  includedirs
-  {
-      INCLUDE_DIRS.imgui,
-      INCLUDE_DIRS.GLFW,
-  }
+    includedirs
+    {
+        INCLUDE_DIRS.imgui,
+        INCLUDE_DIRS.vulkan_sdk,
+        INCLUDE_DIRS.GLFW,
+    }
 
 	files
 	{
@@ -26,22 +27,25 @@ project "ImGUI"
 		"imstb_truetype.h",
 		"imgui_demo.cpp",
 
-    "backends/imgui_impl_opengl3.h",
-    "backends/imgui_impl_opengl3.cpp",
-    "backends/imgui_impl_opengl3_loader.h",
+        "backends/imgui_impl_opengl3.h",
+        "backends/imgui_impl_opengl3.cpp",
+        "backends/imgui_impl_opengl3_loader.h",
 
-    "backends/imgui_impl_glfw.h",
-    "backends/imgui_impl_glfw.cpp",
-	}
+        "backends/imgui_impl_vulkan.h",
+        "backends/imgui_impl_vulkan.cpp",
 
-filter "system:windows"
-		systemversion "latest"
-		staticruntime "On"
+        "backends/imgui_impl_glfw.h",
+        "backends/imgui_impl_glfw.cpp",
+    }
 
-  filter "configurations:Debug"
-    runtime "Debug"
-    symbols "on"
+    filter "system:windows"
+        systemversion "latest"
+        staticruntime "On"
 
-	filter "configurations:Release"
-		runtime "Release"
-		optimize "on"
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "on"
